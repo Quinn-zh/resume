@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秦振宏 · 个人网站</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: #0a0a0f;
+  color: #e0e0e0;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* ---- Particles Background ---- */
+#particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ---- Navigation ---- */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0 2rem;
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+.nav-logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: #999;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #60a5fa, #a78bfa);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { width: 100%; }
+
+/* ---- Sections Common ---- */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 2rem 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.section-title .num {
+  font-size: 1rem;
+  color: #60a5fa;
+  font-weight: 400;
+  font-family: 'Fira Code', monospace;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(96, 165, 250, 0.3), transparent);
+}
+
+/* ---- Hero ---- */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 60px;
+}
+.hero-content {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  width: 100%;
+}
+.hero-avatar {
+  flex-shrink: 0;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 60px rgba(96, 165, 250, 0.2);
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.hero-text h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.hero-text .subtitle {
+  font-size: 1.2rem;
+  color: #60a5fa;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+.hero-text .school {
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+.hero-text .school i { margin-right: 0.4rem; color: #60a5fa; }
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+.hero-tags span {
+  background: rgba(96, 165, 250, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #93c5fd;
+}
+.hero-contact {
+  display: flex;
+  gap: 1.5rem;
+}
+.hero-contact a {
+  color: #94a3b8;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+}
+.hero-contact a:hover { color: #60a5fa; transform: translateY(-2px); }
+
+/* ---- About ---- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.about-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s;
+}
+.about-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(96, 165, 250, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.about-card h3 {
+  font-size: 1.1rem;
+  color: #60a5fa;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.about-card h3 i { width: 20px; }
+.about-card p, .about-card li {
+  color: #aaa;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+.about-card ul {
+  list-style: none;
+  padding: 0;
+}
+.about-card ul li::before {
+  content: '▸';
+  color: #60a5fa;
+  margin-right: 0.5rem;
+}
+
+/* ---- Skills ---- */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.skill-cat {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+.skill-cat:hover {
+  border-color: rgba(96, 165, 250, 0.3);
+  transform: translateY(-2px);
+}
+.skill-cat h4 {
+  color: #60a5fa;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.skill-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.skill-items span {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ---- Projects ---- */
+.project-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s;
+}
+.project-card:hover {
+  border-color: rgba(96, 165, 250, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.project-header h3 {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+}
+.project-header .role {
+  color: #60a5fa;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.project-header .date {
+  color: #666;
+  font-size: 0.8rem;
+}
+.project-card p {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.project-card ul {
+  list-style: none;
+  padding: 0;
+}
+.project-card ul li {
+  color: #aaa;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  padding-left: 1.2rem;
+  position: relative;
+}
+.project-card ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #60a5fa;
+}
+
+/* ---- Experience ---- */
+.exp-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s;
+}
+.exp-card:hover {
+  border-color: rgba(96, 165, 250, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+.exp-header h3 {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+}
+.exp-header .company {
+  color: #60a5fa;
+  font-size: 0.8rem;
+}
+.exp-header .date {
+  color: #666;
+  font-size: 0.8rem;
+}
+.exp-card .desc {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* ---- Contact ---- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+.contact-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+.contact-item:hover {
+  border-color: rgba(96, 165, 250, 0.3);
+  transform: translateY(-4px);
+}
+.contact-item i {
+  font-size: 1.8rem;
+  color: #60a5fa;
+  margin-bottom: 0.8rem;
+}
+.contact-item h4 {
+  font-size: 0.85rem;
+  color: #999;
+  margin-bottom: 0.3rem;
+}
+.contact-item a, .contact-item span {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.contact-item a:hover { color: #60a5fa; }
+
+/* ---- Footer ---- */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+  color: #555;
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0f; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+  .hero-text h1 { font-size: 2.2rem; }
+  .hero-tags, .hero-contact { justify-content: center; }
+  .about-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  section { padding: 70px 1.5rem 50px; }
+  .project-header { flex-direction: column; gap: 0.3rem; }
+  .exp-header { flex-direction: column; gap: 0.3rem; }
+}
+
+/* ---- Animations ---- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Qin Zhenhong</div>
+    <ul class="nav-links">
+      <li><a href="#about">关于</a></li>
+      <li><a href="#skills">技能</a></li>
+      <li><a href="#projects">项目</a></li>
+      <li><a href="#experience">经历</a></li>
+      <li><a href="#contact">联系</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-avatar">秦</div>
+    <div class="hero-text">
+      <h1>秦振宏</h1>
+      <div class="subtitle">数据科学与大数据技术 · 本科</div>
+      <div class="school"><i class="fas fa-university"></i>上海杉达学院 · 2022 – 2026</div>
+      <div class="hero-tags">
+        <span>AI 辅助全栈开发</span>
+        <span>深度学习</span>
+        <span>大数据平台</span>
+        <span>Web 开发</span>
+        <span>Linux 运维</span>
+      </div>
+      <div class="hero-contact">
+        <a href="tel:19558312513" title="电话"><i class="fas fa-phone"></i></a>
+        <a href="mailto:q182xs@163.com" title="邮箱"><i class="fas fa-envelope"></i></a>
+        <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <h2 class="section-title fade-in"><span class="num">01.</span>关于我</h2>
+  <div class="about-grid">
+    <div class="about-card fade-in">
+      <h3><i class="fas fa-user"></i>个人简介</h3>
+      <p>具备扎实的计算机与数据科学基础，课程覆盖大数据、AI、前后端开发、系统运维等全链路方向。拥有深度学习模型从理论到落地的完整实践能力，熟练运用 AI Agent 与 Skill 体系辅助全栈开发。</p>
+    </div>
+    <div class="about-card fade-in">
+      <h3><i class="fas fa-graduation-cap"></i>主修课程</h3>
+      <ul>
+        <li>Python 编程与数据可视化、Java 程序设计</li>
+        <li>数据库原理与应用、数据结构课程设计</li>
+        <li>大数据平台技术、Hadoop 集群部署</li>
+        <li>人工智能导论、机器学习与深度学习实践</li>
+        <li>Web 前端开发技术、Python Django 框架开发</li>
+        <li>Linux 系统管理、计算机网络基础</li>
+      </ul>
+    </div>
+    <div class="about-card fade-in">
+      <h3><i class="fas fa-bolt"></i>个人优势</h3>
+      <ul>
+        <li>熟练运用 Codex / Cursor / OpenClaw 等 AI Agent 与 Skill 体系</li>
+        <li>具备 AI 辅助全栈开发能力</li>
+        <li>深度学习模型从理论到落地的完整实践（CNN-LSTM、Transformer-LSTM）</li>
+      </ul>
+    </div>
+    <div class="about-card fade-in">
+      <h3><i class="fas fa-flag"></i>基本信息</h3>
+      <ul>
+        <li>出生年月：2003 年 4 月</li>
+        <li>学历：本科 · 2026 届</li>
+        <li>专业：数据科学与大数据技术</li>
+        <li>联系方式：19558312513</li>
+        <li>邮箱：q182xs@163.com</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title fade-in"><span class="num">02.</span>技能专长</h2>
+  <div class="skills-grid">
+    <div class="skill-cat fade-in">
+      <h4><i class="fas fa-database"></i> 大数据方向</h4>
+      <div class="skill-items">
+        <span>大数据平台技术</span>
+        <span>Hadoop</span>
+        <span>分布式数据库</span>
+        <span>数据分析与可视化</span>
+        <span>云计算基础</span>
+        <span>云平台运维</span>
+      </div>
+    </div>
+    <div class="skill-cat fade-in">
+      <h4><i class="fas fa-robot"></i> AI 与前沿方向</h4>
+      <div class="skill-items">
+        <span>人工智能导论</span>
+        <span>机器学习</span>
+        <span>深度学习实践</span>
+        <span>CNN-LSTM</span>
+        <span>Transformer-LSTM</span>
+      </div>
+    </div>
+    <div class="skill-cat fade-in">
+      <h4><i class="fas fa-code"></i> Web 与后端方向</h4>
+      <div class="skill-items">
+        <span>Web 前端开发</span>
+        <span>Python Django</span>
+        <span>Java Web</span>
+        <span>数据库编程</span>
+      </div>
+    </div>
+    <div class="skill-cat fade-in">
+      <h4><i class="fas fa-terminal"></i> 系统与安全方向</h4>
+      <div class="skill-items">
+        <span>Linux 系统管理</span>
+        <span>计算机网络</span>
+        <span>信息安全</span>
+        <span>网络安全运营</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="section-title fade-in"><span class="num">03.</span>项目经历</h2>
+
+  <div class="project-card fade-in">
+    <div class="project-header">
+      <h3>Transformer-LSTM 期货预测模型</h3>
+      <span class="role">核心开发者</span>
+      <span class="date">2025.09 – 2026.03</span>
+    </div>
+    <p>构建 <strong>CNN-LSTM</strong> 与 <strong>Transformer-LSTM</strong> 双路线深度学习模型，实现期货价格时序预测。</p>
+    <ul>
+      <li>独立负责数据预处理、特征工程、模型设计及训练调优全流程</li>
+      <li>开展消融实验与对比分析，评估多时间窗口下的预测精度与泛化能力</li>
+      <li>运用 Matplotlib 与 Tableau 进行预测结果可视化，输出专业分析报告</li>
+    </ul>
+  </div>
+
+  <div class="project-card fade-in">
+    <div class="project-header">
+      <h3>微信小程序开发者工具</h3>
+      <span class="role">自学实践</span>
+    </div>
+    <p>基于 Electron 的跨平台桌面应用，为小程序开发者提供开发、调试与发布一体化方案。</p>
+    <ul>
+      <li>支持 Windows / macOS / Linux 三端适配</li>
+      <li>实现实时错误日志采集与性能分析模块</li>
+      <li>设计第三方插件与 SDK 集成架构，支撑开发者自定义功能扩展</li>
+    </ul>
+  </div>
+</section>
+
+<section id="experience">
+  <h2 class="section-title fade-in"><span class="num">04.</span>实习经历</h2>
+
+  <div class="exp-card fade-in">
+    <div class="exp-header">
+      <h3>品牌讲解专员</h3>
+      <span class="company">上海 AWE 会展（leader 品牌合作展区）</span>
+      <span class="date">2023.04 – 2023.05</span>
+    </div>
+    <div class="desc">
+      对不同观众（媒体、经销商、普通用户）灵活调整讲解重点，获得品牌方现场负责人书面好评。引导观众动线并收集意向客户信息，后续转化跟进。
+    </div>
+  </div>
+
+  <div class="exp-card fade-in">
+    <div class="exp-header">
+      <h3>游戏垂类内容运营</h3>
+      <span class="company">游戏内容运营</span>
+      <span class="date">2025.09 – 2026.05</span>
+    </div>
+    <div class="desc">
+      围绕游戏场景提供定制化用户陪伴服务，通过内容引流 + 私域复购实现项目变现 2 万元，付费用户复购率 70%。
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title fade-in"><span class="num">05.</span>联系我</h2>
+  <div class="contact-grid">
+    <div class="contact-item fade-in">
+      <i class="fas fa-phone"></i>
+      <h4>电话</h4>
+      <a href="tel:19558312513">19558312513</a>
+    </div>
+    <div class="contact-item fade-in">
+      <i class="fas fa-envelope"></i>
+      <h4>邮箱</h4>
+      <a href="mailto:q182xs@163.com">q182xs@163.com</a>
+    </div>
+    <div class="contact-item fade-in">
+      <i class="fas fa-map-marker-alt"></i>
+      <h4>学校</h4>
+      <span>上海杉达学院</span>
+    </div>
+    <div class="contact-item fade-in">
+      <i class="fas fa-calendar-alt"></i>
+      <h4>出生年月</h4>
+      <span>2003 年 4 月</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 秦振宏 · All Rights Reserved</p>
+</footer>
+
+<script>
+// ---- Particles ----
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let mouse = { x: null, y: null };
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 2 + 0.5;
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.speedY = (Math.random() - 0.5) * 0.5;
+      this.opacity = Math.random() * 0.5 + 0.1;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+        this.reset();
+      }
+      if (mouse.x) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          this.x -= dx * 0.01;
+          this.y -= dy * 0.01;
+        }
+      }
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(96, 165, 250, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  const count = Math.min(80, Math.floor(window.innerWidth * window.innerHeight / 12000));
+  for (let i = 0; i < count; i++) particles.push(new Particle());
+
+  let mouseTimeout;
+  canvas.addEventListener('mousemove', e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    clearTimeout(mouseTimeout);
+    mouseTimeout = setTimeout(() => { mouse.x = null; mouse.y = null; }, 300);
+  });
+
+  function connect() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(96, 165, 250, ${0.06 * (1 - dist / 150)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    connect();
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ---- Scroll Reveal ----
+(function() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+// ---- Smooth Scroll ----
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
